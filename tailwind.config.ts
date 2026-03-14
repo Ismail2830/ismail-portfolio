@@ -9,8 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "#0f0f1a",
+        secondary: "#1a1a2e",
+        accent: "#6c63ff",
+        "accent-light": "#a29bfe",
+        muted: "#64748b",
+      },
+      fontFamily: {
+        mono: ["'JetBrains Mono'", "monospace"],
+        sans: ["'Inter'", "sans-serif"],
       },
     },
   },
