@@ -2,7 +2,7 @@
 import { useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Float, Torus, Box } from "@react-three/drei";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import * as THREE from "three";
 
 /* ── Floating glowing octahedron (no font/CDN needed) ── */
@@ -135,6 +135,8 @@ function Scene() {
 
 /* ── Section export ── */
 export default function AboutSection() {
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(canvasRef, { margin: "200px" });
   return (
     <section id="about" className="py-24 px-6 max-w-6xl mx-auto">
       <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -145,6 +147,7 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
+          ref={canvasRef}
           className="relative h-[420px] rounded-2xl overflow-hidden border border-accent/20 bg-secondary/40"
         >
           {/* Floating code text labels */}
@@ -170,11 +173,13 @@ export default function AboutSection() {
             </motion.span>
           ))}
 
-          <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-            <Suspense fallback={null}>
-              <Scene />
-            </Suspense>
-          </Canvas>
+          {inView && (
+            <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+              <Suspense fallback={null}>
+                <Scene />
+              </Suspense>
+            </Canvas>
+          )}
         </motion.div>
 
         {/* Text content */}

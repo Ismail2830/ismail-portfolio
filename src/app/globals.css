@@ -16,6 +16,12 @@ body {
   overflow-x: hidden;
 }
 
+/* hide the native cursor when the custom 3D globe cursor is active */
+.cursor-globe-on,
+.cursor-globe-on * {
+  cursor: none !important;
+}
+
 /* custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0f0f1a; }
@@ -38,4 +44,10 @@ body {
   border-color: rgba(108,99,255,0.6);
   transform: translateY(-4px);
   transition: all 0.3s ease;
+}
+
+/* diagonal light sweep used on project cards */
+@keyframes sheen {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }

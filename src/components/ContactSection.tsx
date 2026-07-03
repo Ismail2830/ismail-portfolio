@@ -1,10 +1,20 @@
 "use client";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const GlobeCanvas = dynamic(() => import("@/components/three/GlobeCanvas"), {
+  ssr: false,
+});
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="py-24 px-6 bg-secondary/20">
-      <div className="max-w-2xl mx-auto text-center">
+    <section id="contact" className="relative py-24 px-6 bg-secondary/20 overflow-hidden">
+      {/* 3D wireframe globe floating behind the form */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] opacity-40 pointer-events-none hidden md:block -translate-y-16 translate-x-24">
+        <GlobeCanvas />
+      </div>
+
+      <div className="relative z-10 max-w-2xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

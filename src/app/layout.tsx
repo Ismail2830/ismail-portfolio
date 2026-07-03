@@ -1,9 +1,18 @@
 "use client";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
+
+// WebGL background is client-only to avoid SSR/hydration issues
+const Background3D = dynamic(() => import("@/components/three/Background3D"), {
+  ssr: false,
+});
+const CursorGlobe = dynamic(() => import("@/components/three/CursorGlobe"), {
+  ssr: false,
+});
 
 export default function RootLayout({
   children,
@@ -21,6 +30,8 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} bg-primary text-white antialiased`}>
+        <Background3D />
+        <CursorGlobe />
         <Navbar />
         {children}
       </body>
