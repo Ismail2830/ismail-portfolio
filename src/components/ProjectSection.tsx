@@ -51,8 +51,8 @@ const projects: Project[] = [
     description:
       "A tool for freelancers to create and manage professional invoices — add clients, itemize services, calculate totals and taxes, and export ready-to-send PDFs.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS"],
-    status: "Completed",
-    github: "https://github.com/Ismail2830/Freelance-invoice",
+    status: "Live",
+    live: "https://freelance-invoice-fawn.vercel.app/fr",
     gradient: "from-pink-500/20 to-rose-500/20",
   },
 ];
