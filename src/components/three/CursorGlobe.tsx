@@ -78,11 +78,29 @@ export default function CursorGlobe() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
   const [hovering, setHovering] = useState(false);
+  const [pressed, setPressed] = useState(false);
+  const [clickId, setClickId] = useState(0);
 
   // only enable on devices with a fine pointer (mouse)
   useEffect(() => {
     setEnabled(window.matchMedia("(pointer: fine)").matches);
   }, []);
+
+  // click feedback: dip the globe on press, fire a ripple on click
+  useEffect(() => {
+    if (!enabled) return;
+    const down = () => {
+      setPressed(true);
+      setClickId((n) => n + 1);
+    };
+    const up = () => setPressed(false);
+    window.addEventListener("mousedown", down);
+    window.addEventListener("mouseup", up);
+    return () => {
+      window.removeEventListener("mousedown", down);
+      window.removeEventListener("mouseup", up);
+    };
+  }, [enabled]);
 
   // hide the native cursor while the globe is active
   useEffect(() => {
@@ -130,12 +148,27 @@ export default function CursorGlobe() {
       className="fixed left-0 top-0 z-[9999] pointer-events-none will-change-transform"
       style={{ transform: "translate3d(-100px,-100px,0) translate(-50%,-50%)" }}
     >
+      {/* ripple pulse fired on each click */}
+      {clickId > 0 && (
+        <span
+          key={clickId}
+          className="absolute left-1/2 top-1/2 rounded-full border border-accent-light"
+          style={{
+            width: 40,
+            height: 40,
+            marginLeft: -20,
+            marginTop: -20,
+            animation: "cursor-ripple 0.5s ease-out forwards",
+          }}
+        />
+      )}
+
       <div
-        className="transition-transform duration-200 ease-out"
+        className="transition-transform duration-150 ease-out"
         style={{
           width: 40,
           height: 40,
-          transform: `scale(${hovering ? 1.6 : 1})`,
+          transform: `scale(${(hovering ? 1.6 : 1) * (pressed ? 0.8 : 1)})`,
           filter: "drop-shadow(0 0 6px rgba(108,99,255,0.6))",
         }}
       >

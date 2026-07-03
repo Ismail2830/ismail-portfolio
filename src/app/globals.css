@@ -22,6 +22,12 @@ body {
   cursor: none !important;
 }
 
+/* click ripple emitted by the custom globe cursor */
+@keyframes cursor-ripple {
+  0%   { transform: scale(0.4); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
 /* custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0f0f1a; }
