@@ -8,14 +8,23 @@ import {
   MotionValue,
 } from "framer-motion";
 
-const projects = [
+type Project = {
+  title: string;
+  description: string;
+  tech: string[];
+  status: string;
+  live?: string;
+  github?: string;
+  gradient: string;
+};
+
+const projects: Project[] = [
   {
     title: "Assurance Plateforme",
     description:
       "A full-stack insurance management platform with online declaration, real-time dossier tracking, AI-assisted decision making, risk scoring, and role-based dashboards for clients and managers.",
     tech: ["Next.js", "PostgreSQL", "TypeScript", "Tailwind CSS", "Python"],
     status: "Live",
-    github: "https://github.com/Ismail2830/claims-plateform",
     live: "https://claims-plateform.vercel.app/",
     gradient: "from-green-500/20 to-teal-500/20",
   },
@@ -25,7 +34,6 @@ const projects = [
       "A responsive coffee shop showcase website featuring a clean menu layout, full product listing with categories, and a modern UI — built to deliver a smooth browsing experience on all devices.",
     tech: ["React", "TypeScript", "Tailwind CSS"],
     status: "Live",
-    github: "https://github.com/Ismail2830/coffee-shop",
     live: "https://coffee-shop-seven-alpha.vercel.app/",
     gradient: "from-blue-500/20 to-cyan-500/20",
   },
@@ -35,9 +43,17 @@ const projects = [
       "Full-stack inventory management app with CRUD operations, real-time stock tracking, and role-based access control.",
     tech: ["Next.js", "PostgreSQL", "Tailwind CSS", "Prisma"],
     status: "In Progress",
-    github: "https://github.com/Ismail2830/InvManagment",
     live: "https://inv-managment.vercel.app/",
     gradient: "from-purple-500/20 to-blue-500/20",
+  },
+  {
+    title: "Freelance Invoice",
+    description:
+      "A tool for freelancers to create and manage professional invoices — add clients, itemize services, calculate totals and taxes, and export ready-to-send PDFs.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS"],
+    status: "Completed",
+    github: "https://github.com/Ismail2830/Freelance-invoice",
+    gradient: "from-pink-500/20 to-rose-500/20",
   },
 ];
 
@@ -63,8 +79,6 @@ const cardVariants = {
     transition: { type: "spring" as const, stiffness: 90, damping: 16 },
   },
 };
-
-type Project = (typeof projects)[number];
 
 function ProjectCard({ project }: { project: Project }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -162,16 +176,18 @@ function ProjectCard({ project }: { project: Project }) {
           </div>
 
           <div className="flex gap-4">
-            <a
-              target="_blank"
-              href={project.live}
-              className="flex items-center gap-2 text-sm font-mono text-accent hover:text-accent-light transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-              Live Demo
-            </a>
+            {project.live && (
+              <a
+                target="_blank"
+                href={project.live}
+                className="flex items-center gap-2 text-sm font-mono text-accent hover:text-accent-light transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                Live Demo
+              </a>
+            )}
             {project.github && (
               <a
                 target="_blank"
