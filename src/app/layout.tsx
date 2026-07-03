@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 const Background3D = dynamic(() => import("@/components/three/Background3D"), {
   ssr: false,
 });
-const CursorGlobe = dynamic(() => import("@/components/three/CursorGlobe"), {
+const CuteCursor = dynamic(() => import("@/components/CuteCursor"), {
   ssr: false,
 });
 
@@ -31,7 +31,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} bg-primary text-white antialiased`}>
         <Background3D />
-        <CursorGlobe />
+        <CuteCursor />
         <Navbar />
         {children}
       </body>
