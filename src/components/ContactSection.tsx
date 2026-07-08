@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 
@@ -6,7 +7,46 @@ const GlobeCanvas = dynamic(() => import("@/components/three/GlobeCanvas"), {
   ssr: false,
 });
 
+// Get a free access key at https://web3forms.com (enter your email, it emails you the key).
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function ContactSection() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `Portfolio contact from ${name || "someone"}`,
+          name,
+          email,
+          message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <section id="contact" className="relative py-24 px-6 bg-secondary/20 overflow-hidden">
       {/* 3D wireframe globe floating behind the form */}
@@ -28,12 +68,15 @@ export default function ContactSection() {
             I&apos;m currently open to new opportunities. Whether you have a project in mind or just want to say hi — my inbox is always open.
           </p>
 
-          <form className="space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-4 text-left" onSubmit={handleSubmit}>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-mono text-gray-400 mb-2">Name</label>
                 <input
                   type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   placeholder="Your name"
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-accent transition-colors font-mono text-sm"
                 />
@@ -42,6 +85,9 @@ export default function ContactSection() {
                 <label className="block text-sm font-mono text-gray-400 mb-2">Email</label>
                 <input
                   type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-accent transition-colors font-mono text-sm"
                 />
@@ -51,16 +97,35 @@ export default function ContactSection() {
               <label className="block text-sm font-mono text-gray-400 mb-2">Message</label>
               <textarea
                 rows={5}
+                required
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 placeholder="Tell me about your project..."
                 className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-accent transition-colors font-mono text-sm resize-none"
               />
             </div>
             <button
               type="submit"
-              className="w-full py-3 bg-accent text-white font-mono rounded-xl hover:bg-accent/80 transition-all duration-200 shadow-lg shadow-accent/30"
+              disabled={status === "sending"}
+              className="w-full py-3 bg-accent text-white font-mono rounded-xl hover:bg-accent/80 transition-all duration-200 shadow-lg shadow-accent/30 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Send Message →
+              {status === "sending" ? "Sending..." : "Send Message →"}
             </button>
+
+            {status === "success" && (
+              <p className="text-sm font-mono text-green-400 text-center">
+                ✓ Thanks! Your message has been sent.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="text-sm font-mono text-red-400 text-center">
+                Something went wrong. Please email me directly at{" "}
+                <a href="mailto:ismailaitrehail2830@gmail.com" className="underline">
+                  ismailaitrehail2830@gmail.com
+                </a>
+                .
+              </p>
+            )}
           </form>
 
           <div className="mt-12 flex justify-center gap-6">
