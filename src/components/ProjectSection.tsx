@@ -39,14 +39,14 @@ function ProjectCard({ project }: { project: Project }) {
   const px = useMotionValue(0);
   const py = useMotionValue(0);
 
-  // springy 3D tilt derived from pointer position
-  const rotateX = useSpring(useTransform(py, [-0.5, 0.5], [8, -8]), {
+  // springy 3D tilt derived from pointer position (subtle, so links stay clickable)
+  const rotateX = useSpring(useTransform(py, [-0.5, 0.5], [3, -3]), {
     stiffness: 150,
-    damping: 15,
+    damping: 20,
   });
-  const rotateY = useSpring(useTransform(px, [-0.5, 0.5], [-8, 8]), {
+  const rotateY = useSpring(useTransform(px, [-0.5, 0.5], [-3, 3]), {
     stiffness: 150,
-    damping: 15,
+    damping: 20,
   });
 
   // spotlight follows the cursor across the card surface
@@ -87,7 +87,7 @@ function ProjectCard({ project }: { project: Project }) {
           }
         }}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.01 }}
         className={`relative card-glass rounded-2xl p-6 bg-gradient-to-br ${project.gradient} transition-shadow duration-300 group overflow-hidden hover:shadow-2xl hover:shadow-accent/20 cursor-pointer`}
       >
         {/* cursor-following spotlight */}
@@ -99,7 +99,7 @@ function ProjectCard({ project }: { project: Project }) {
         {/* animated gradient border sheen on hover */}
         <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 [background:linear-gradient(120deg,transparent,rgba(162,155,254,0.15),transparent)] bg-[length:200%_100%] group-hover:animate-[sheen_1.2s_ease-in-out]" />
 
-        <div className="relative" style={{ transform: "translateZ(40px)" }}>
+        <div className="relative" style={{ transform: "translateZ(20px)" }}>
           <div className="flex items-start justify-between mb-4">
             <motion.div
               whileHover={{ rotate: 12, scale: 1.1 }}
@@ -151,23 +151,6 @@ function ProjectCard({ project }: { project: Project }) {
                 {t}
               </motion.span>
             ))}
-          </div>
-
-          <div className="flex gap-4">
-            {project.live && (
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={project.live}
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-2 text-sm font-mono text-accent hover:text-accent-light transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                Live Demo
-              </a>
-            )}
           </div>
         </div>
       </motion.div>
