@@ -209,8 +209,8 @@ export default function AboutSection() {
               everything from pixel-perfect UIs to robust backend APIs.
             </p>
             <p>
-              When I&apos;m not coding, I&apos;m exploring SaaS ideas,
-              print-on-demand projects, or preparing for government IT exams.
+              When I&apos;m not coding, I&apos;m building side products and
+              obsessing over new technologies.
             </p>
           </div>
 

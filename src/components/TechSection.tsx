@@ -14,7 +14,7 @@ const categories = [
   },
   {
     name: "Database",
-    techs: ["PostgreSQL", "MySQL", "Prisma ORM", "SQL", "RAID Systems"],
+    techs: ["PostgreSQL", "MySQL", "Prisma ORM", "SQL"],
     
   },
   {

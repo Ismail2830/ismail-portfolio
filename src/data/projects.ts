@@ -37,7 +37,7 @@ export const projects: Project[] = [
     title: "ISM Trip",
     description:
       "A web app that turns a few inputs into a complete, day-by-day travel itinerary. Enter a destination, dates, budget, and interests, and OpenAI generates a mapped, priced plan you can refine through a built-in AI assistant. Built with React (Expo Router) and TypeScript, with Clerk authentication (Google/Apple), a Neon Postgres + Drizzle backend, background generation via Inngest, and optimized image delivery through ImageKit. Features a custom lime/glass design system and a responsive, modern UI.",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "OpenIA"],
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "OpenAI"],
     status: "Live",
     live: "https://ismtrip-cqya.vercel.app/",
     gradient: "from-pink-500/20 to-rose-500/20",
