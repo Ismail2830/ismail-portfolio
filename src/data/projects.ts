@@ -104,6 +104,15 @@ export const projects: Project[] = [
       "/images/fatora/7-empty-dashboard.png",
     ],
   },
+  {
+    slug: "adv-dashboard",
+    title: "ADV Dashboard",
+    description:
+      "Internal sales & delivery management dashboard integrating with Sage X3 ERP. Role-based views for admins, commercial reps, and ADV agents to track orders, resolve blocked deliveries, trigger automated delivery workflows, and generate PDF reports — with hourly-refreshed Sage X3 caching to keep the system responsive without hitting the ERP on every request.",
+    tech: ["Laravel", "React", "Sage X3", "REST API"],
+    status: "In Progress",
+    gradient: "from-orange-500/20 to-amber-500/20",
+  },
 ];
 
 export const statusColor: Record<string, string> = {
